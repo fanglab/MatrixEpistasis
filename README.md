@@ -24,7 +24,7 @@ Ultrafast exhaustive epistasis scan for quantitative traits with covariate adjus
 ```
 3. Install MatrixEpistasis
 ```
-   install_github("zhushijia/MatrixEpistasis")
+   install_github("fanglab/MatrixEpistasis")
 ```
 
 ## Example:
