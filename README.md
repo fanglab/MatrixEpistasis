@@ -28,6 +28,6 @@ Ultrafast exhaustive epistasis scan for quantitative traits with covariate adjus
 ```
 
 ## Example:
-   See [Tutorial](https://github.com/zhushijia/MatrixEpistasis/blob/master/vignettes/MatrixEpistasis_tutorial.Rmd)
-   and [Manual](https://github.com/zhushijia/MatrixEpistasis/blob/master/vignettes/MatrixEpistasis-manual.pdf)
+   See [Tutorial](https://github.com/fanglab/MatrixEpistasis/blob/master/vignettes/MatrixEpistasis_tutorial.Rmd)
+   and [Manual](https://github.com/fanglab/MatrixEpistasis/blob/master/vignettes/MatrixEpistasis-manual.pdf)
 
