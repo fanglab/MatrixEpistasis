@@ -43,11 +43,11 @@ library(MatrixEpistasis)
 # randomly generate a SNP matrix
 snp <- sapply(1:100,function(i) rnorm(1000) )
 # assign names to SNPs
-colnames(snp) <- paste0('snp',1:100)
+colnames(snp) <- paste0('snp',1:ncol(snp))
 snpA = snp
 snpB = snp
 # radnomly generate a quantitative trait by simulating the relationship between SNPs and traits
-trait <- snp %*% rnorm(100)
+trait <- snp %*% rnorm(ncol(snp))
 # use the top 5 PCs as the covariates 
 covariate <- prcomp(snp)$x[,1:5]
 
