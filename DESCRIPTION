@@ -1,0 +1,27 @@
+Package: MatrixEpistasis
+Type: Package
+Title: An ultrafast exhaustive epistasis scan for quantitative traits
+    with covariate adjustment
+Version: 0.1.0
+Author: Shijia Zhu
+Maintainer: Shijia Zhu <shijia.zhu@mssm.edu>
+Description: MatrixEpistasis exhaustively scans all pairwise genetic
+    interactions for quantitative traits. MatrixEpistasis works on both discrete
+    genotype and continuous imputed genotype data. MatrixEpistasis can adjust
+    covariates for epistasis detection, such as gender, age, and population
+    structure. The excellent time-efficiency of MatrixEpistasis is achieved by the
+    following innovations: 1) it expresses the intensive computation in terms of
+    large matrix inner products (notably, no matrix inverse), avoiding separately
+    calculating each epistasis model; 2) out of all regression coefficients
+    (including two additive terms, one interaction term and multiple covariate
+    terms), MatrixEpistasis only calculates the test statistic for the interaction
+    term, largely alleviating the computational complexity; 3) the resulting test
+    statistics from MatrixEpistasis are comparable, so that MatrixEpistasis can
+    calculate p-values only for those exceeding the required significance level,
+    therefore discarding a large number of incomplete beta or gamma functions.
+License: LGPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 6.0.1
+NeedsCompilation: no
+Packaged: 2017-08-14 06:22:40 UTC; shijiazhu

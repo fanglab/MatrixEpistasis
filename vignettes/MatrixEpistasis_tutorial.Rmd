@@ -1,0 +1,105 @@
+---
+title: 'MatrixEpistasis: An ultrafast exhaustive epistasis scan for quantitative traits with covariate adjustment'
+author: |
+  | Shijia Zhu
+  | Department of Genetics and Genomic Sciences and Icahn Institute for Genomics and Multiscale Biology, Icahn School of Medicine at Mount Sinai, New York, NY 10029, USA
+date: "August 28, 2017"
+output:
+  pdf_document:
+    toc: yes
+    toc_depth: '3'
+  html_document:
+    highlight: tango
+    theme: united
+    toc: yes
+    toc_depth: 3
+---
+
+
+## Abstract
+For many traits, causal loci uncovered by genetic-mapping studies explain only a minority of the heritable contribution to trait variation. Multiple explanations for this ‘missing heritability’ have been proposed. SNP-SNP interaction (epistasis), as one of the most compelling models, has been widely studied. However, the genome-wide scan of epistasis, especially for quantitative traits, proposes huge computational challenges. Moreover, covariate adjustment is largely ignored for epistasis due to the massive extra computational undertaking. In the current study, we found striking differences among epistasis models using both simulation data and real biological data, suggesting that the covariate adjustment cannot only remove confounding bias, but also improve the power. Furthermore, we derived mathematical formulas, which enable the exhaustive epistasis scan together with full covariate adjustment to be expressed in terms of large matrix operation, therefore substantially improving the computational efficiency (~10^4X faster than the others). We call the novel method `MatrixEpistasis`. With MatrixEpistasis, we reanalyze a large real yeast dataset comprising 11,623 SNPs, 1,008 segregants and 46 quantitative traits with covariates fully adjusted. Consequently, we found thousands of novel epistasis (p values < 1.48e-10). 
+
+ 
+
+## 1. Install MatrixEpistasis
+`MatrixEpistasis` is available as an R package and can be conveniently installed from github with the following R commands:
+
+```{r}
+# Install the devtools package
+install.packages("devtools")
+# Load the devtools package
+library(devtools)
+# Install MatrixEpistasis
+install_github("zhushijia/MatrixEpistasis")
+```
+
+## 2. A quick toy example
+Users can begin with the following toy example, where the simulated snp matrix, quantitative trait and covariates are used for the exhaustive epistasis searching. Users can organize their own data by following the format in the example. The epistasis with p-value less than the predefined threshold is written into the user-specified file. 
+
+```{r}
+# load the MatrixEpistasis package
+library(MatrixEpistasis)
+
+# randomly generate a SNP matrix
+snp <- sapply(1:100,function(i) rnorm(1000) )
+# assign names to SNPs
+colnames(snp) <- paste0('snp',1:100)
+snpA = snp
+snpB = snp
+# radnomly generate a quantitative trait by simulating the relationship between SNPs and traits
+trait <- snp %*% rnorm(100)
+# use the top 5 PCs as the covariates 
+covariate <- prcomp(snp)$x[,1:5]
+
+# run MatrixEpistasis with covariates adjustment, set the p-value threshold as 1e-2, and write the epistasis result (p < 1e-2) into the file matrixEpistasis_pval_1e-5.txt. 
+MatrixEpistasis_main( snpA=snpA, snpB=snpB, trait=trait, covariate=covariate, pvalThreshold=1e-2, outputFileName='matrixEpistasis_pval_1e-5.txt')
+
+```
+
+
+## 3. Run MatrixEpistasis step-by-step
+In order to make it easier for the users to customize the codes, we will run the matrixEpstasis step by step. The help pages have already been built in the `MatrixEpistasis` R package, so, users can simply use help(FunctionNameOfInterestcheck) or ?FunctionNameOfInterest to check the details of function definition and parameter setting.
+
+```{r}
+# run matrixEpistasis function with covariates adjustment
+res <- matrixEpistasis( snpA=snpA, snpB=snpB, trait=trait, covariate = covariate )
+
+# res is a list comprising two components: r and df. res$r is the matrix of partial correlation coefficients between snp interaction (snpA*snpB) and trait with additive effects (snpA and snpB) and covariates adjusted, and res$df is the degree of freedom for the partial correlation.
+names(res)
+r = res$r 
+df = res$df
+
+# based on the degree of freedom, run matrixPval function to calculate p values for all partial correlation coefficients. The result is a matrix of p-values for epistasis of all snp interactions.
+p <- matrixPval( r , df )
+
+# alternatively, users can calculate p-values only for those entries with p vlaues less than a given threshold, say 1e-2, shown as follows: 
+
+# use p2c to covert p value threshold 1e-5 to the corresponding partial correlation coefficient
+corrThreshold <- p2c( pval=1e-2 , df )
+
+# extract the index for those significant ones
+index <- which( abs(r)>corrThreshold , arr.ind=TRUE )
+
+# get the SNP names
+snp1 <- colnames(snpA)[ index[,1] ]
+snp2 <- colnames(snpB)[ index[,2] ]
+
+# use matrixPval function to calculate p values for only those of interest
+pvalue <- matrixPval( r[index] , df  )
+
+# build the data frame
+sig_res <- data.frame( snp1 , snp2 , pvalue )
+head(sig_res)
+
+```
+
+
+## 4. Run MatrixEpistasis on the large dataset
+The outperforming time efficiency of `MatrixEpistasis` is achieved by expressing the most computationally intensive part in terms of large matrix operations, but meanwhile, it also requires a large memory. Therefore, when running `MatrixEpistasis` for a large number of snps, users are suggested to first split the snp matrix into the relatively small chunks, and next run `MatrixEpistasis` between each pair of chunks. Users can depend on the configuration of their PCs or servers to decide the size of chunks.  
+
+
+
+
+
+
+
