@@ -30,7 +30,7 @@ install.packages("devtools")
 # Load the devtools package
 library(devtools)
 # Install MatrixEpistasis
-install_github("zhushijia/MatrixEpistasis")
+install_github("fanglab/MatrixEpistasis")
 ```
 
 ## 2. A quick toy example
