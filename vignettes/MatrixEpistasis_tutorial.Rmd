@@ -51,8 +51,8 @@ trait <- snp %*% rnorm(ncol(snp))
 # use the top 5 PCs as the covariates 
 covariate <- prcomp(snp)$x[,1:5]
 
-# run MatrixEpistasis with covariates adjustment, set the p-value threshold as 1e-2, and write the epistasis result (p < 1e-2) into the file matrixEpistasis_pval_1e-5.txt. 
-MatrixEpistasis_main( snpA=snpA, snpB=snpB, trait=trait, covariate=covariate, pvalThreshold=1e-2, outputFileName='matrixEpistasis_pval_1e-5.txt')
+# run MatrixEpistasis with covariates adjustment, set the p-value threshold as 1e-2, and write the epistasis result (p < 1e-2) into the file matrixEpistasis_pval_1e-2.txt. 
+MatrixEpistasis_main( snpA=snpA, snpB=snpB, trait=trait, covariate=covariate, pvalThreshold=1e-2, outputFileName='matrixEpistasis_pval_1e-2.txt')
 
 ```
 
