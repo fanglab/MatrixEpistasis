@@ -30,4 +30,6 @@ Ultrafast exhaustive epistasis scan for quantitative traits with covariate adjus
 ## Example:
    See [Tutorial](https://github.com/fanglab/MatrixEpistasis/blob/master/vignettes/MatrixEpistasis_tutorial.Rmd)
    and [Manual](https://github.com/fanglab/MatrixEpistasis/blob/master/vignettes/MatrixEpistasis-manual.pdf)
-
+   
+## Citation:   
+Shijia Zhu & Gang Fang, Matrix Epistasis: ultrafast, exhaustive epistasis scan for quantitative traits with covariate adjustment, Bioinformatics, 2018. [link](https://academic.oup.com/bioinformatics/advance-article/doi/10.1093/bioinformatics/bty094/4917352)
