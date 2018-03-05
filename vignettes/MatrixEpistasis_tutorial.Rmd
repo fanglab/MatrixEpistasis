@@ -74,7 +74,7 @@ p <- matrixPval( r , df )
 
 # alternatively, users can calculate p-values only for those entries with p vlaues less than a given threshold, say 1e-2, shown as follows: 
 
-# use p2c to covert p value threshold 1e-5 to the corresponding partial correlation coefficient
+# use p2c to covert p value threshold 1e-2 to the corresponding partial correlation coefficient
 corrThreshold <- p2c( pval=1e-2 , df )
 
 # extract the index for those significant ones
